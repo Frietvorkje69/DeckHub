@@ -56,7 +56,7 @@ header {
     text-align: center;
     height: 25vh;
     background-color: #111111;
-    background-image: url("../img/banner.png");
+    background-image: url("../steamgrid/capsule.png");
     background-size: cover;
     background-position: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
