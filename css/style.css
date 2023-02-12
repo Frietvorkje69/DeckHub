@@ -119,14 +119,13 @@ img {
 section {
     border-radius: 15px 30px 15px 5px;
     background-color: #303030;
-    /*box-shadow: 4px 4px #AB47BC;*/
     padding: 20px;
     margin: 20px auto;
     font-size: 1.1em;
     width: 100%;
     height: 100%;
-    max-width: 400px;
-    max-height: 400px;
+    max-width: 350px;
+    max-height: 350px;
 }
 
  .gallery {
@@ -151,7 +150,7 @@ button {
     color: #EFF0F1;
     border: 2px solid #AB47BC;
     border-radius: 4px;
-    font-size: 26px;
+    font-size: 22px;
     transition: background-color 0.4s ease-out;
 
 }
@@ -179,10 +178,16 @@ footer {
     display: flex;
     text-align: center;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     align-items: center;
     margin-top: auto;
 }
+
+ .fa-github{
+     font-size: 2rem;
+     transition: background-color 0.4s ease-out;
+ }
+
  .fa-github:hover {
      color: darkgray;
      transition: background-color 0.4s ease-out;
