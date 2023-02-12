@@ -1,5 +1,5 @@
 ## Introduction
-Simple website that serves as hub to all sorts of streaming sites, designed for Valve's Steam Deck.
+Simple website that serves as a hub to all sorts of streaming sites, designed for Valve's Steam Deck.
 <p align="center"><a href="https://frietvorkje69.github.io/DeckHub/" target="_blank"><img src="https://github.com/Frietvorkje69/DeckHub/blob/master/steamgrid/capsule.png?raw=true" width="700" alt="DeckHub Banner"></a></p>
 
 ## How To Use?
