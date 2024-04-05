@@ -254,14 +254,7 @@
                 filterOptions.appendChild(div);
             });
         }
-
-
-
-
-
-
-
-
+        
         function isServiceHidden(serviceName) {
             const preferences = JSON.parse(localStorage.getItem('filterPreferences')) || {};
             return preferences[serviceName] === false;
