@@ -13,8 +13,7 @@
     <div class="py-12">
         <div class="flex justify-between items-center">
             <a href="#" class="flex items-center"> <img src="img/logo.png" alt="DeckHub" class="h-12">  </a>
-            <a href="https://github.com/Frietvorkje69/DeckHub" class="px-4 py-2 text-white rounded bg-gradient-to-r from-transparent to-purple-700 transition-colors hover:bg-purple-700">GitHub</a>
-        </div>
+            <button id="filterButton" class="px-4 py-2 text-white rounded bg-gradient-to-r from-transparent to-purple-700 transition-colors hover:bg-purple-700">Filter</button>        </div>
 
         <div class="mt-4 flex justify-between items-center">
             <div>
@@ -35,8 +34,24 @@
             </div>
         </div>
         <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 auto-cols-fr" id="cardContainer"></div>
-      </div>
     </div>
+</div>
+
+<div id="overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 hidden flex items-center justify-center">
+    <div class="bg-gray-800 rounded-lg overflow-hidden w-96 shadow-xl">
+        <div class="flex justify-between items-center px-4 py-2 bg-purple-800 text-white">
+            <h2 class="text-lg font-semibold">Hide/Unhide Services</h2>
+            <button id="closeOverlay" class="text-white">&times;</button>
+        </div>
+        <div class="p-4">
+            <div id="filterOptions" class="flex flex-col space-y-2 md:space-y-4 lg:space-y-6"></div> <!-- Adjust spacing based on screen size -->
+        </div>
+    </div>
+</div>
+
+
+
+
 
     <script>
         const services = [
@@ -149,8 +164,6 @@
 
         const cardContainer = document.getElementById('cardContainer');
 
-
-
         const sortByNameButton = document.getElementById('sortByName');
         const sortByStatusButton = document.getElementById('sortByStatus');
         const sortByCategoryButton = document.getElementById('sortByCategory');
@@ -201,8 +214,86 @@
         sortByNameButton.addEventListener('click', () => sortServices('name'));
         sortByStatusButton.addEventListener('click', () => sortServices('status'));
         sortByCategoryButton.addEventListener('click', () => sortServices('category'));
-
         sortServices('status');
+
+        const filterOptions = document.getElementById('filterOptions');
+        const overlay = document.getElementById('overlay');
+        const closeOverlayButton = document.getElementById('closeOverlay');
+
+        function toggleOverlay() {
+            overlay.classList.toggle('hidden');
+        }
+
+        function updateFilterPreferences() {
+            const checkboxes = document.querySelectorAll('.filter-checkbox');
+            const preferences = {};
+            checkboxes.forEach(checkbox => {
+                preferences[checkbox.value] = checkbox.checked;
+            });
+            localStorage.setItem('filterPreferences', JSON.stringify(preferences));
+        }
+
+        function renderFilterOptions() {
+            filterOptions.innerHTML = '';
+            services.forEach(service => {
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = service.name;
+                checkbox.checked = !isServiceHidden(service.name);
+                checkbox.classList.add('filter-checkbox', 'text-indigo-600', 'h-8', 'w-8', 'sm:h-6', 'sm:w-6');
+                checkbox.addEventListener('change', () => {
+                    updateFilterPreferences();
+                    applyFilterPreferences();
+                });
+
+                const label = document.createElement('label');
+                label.textContent = service.name;
+                label.classList.add('text-white', 'text-base');
+
+                const div = document.createElement('div');
+                div.classList.add('flex', 'items-center');
+                div.appendChild(checkbox);
+                div.appendChild(label);
+
+                filterOptions.appendChild(div);
+            });
+        }
+
+
+
+
+
+
+
+
+        function isServiceHidden(serviceName) {
+            const preferences = JSON.parse(localStorage.getItem('filterPreferences')) || {};
+            return preferences[serviceName] === false;
+        }
+
+        function applyFilterPreferences() {
+            const preferences = JSON.parse(localStorage.getItem('filterPreferences')) || {};
+            const visibleServices = services.filter(service => preferences[service.name] !== false);
+            renderCards(visibleServices);
+        }
+
+        document.getElementById('filterButton').addEventListener('click', () => {
+            toggleOverlay();
+        });
+
+        closeOverlayButton.addEventListener('click', () => {
+            toggleOverlay();
+        });
+
+        overlay.addEventListener('click', (event) => {
+            if (event.target === overlay) {
+                toggleOverlay();
+            }
+        });
+
+        renderFilterOptions();
+        applyFilterPreferences();
+
     </script>
 </body>
 </html>
