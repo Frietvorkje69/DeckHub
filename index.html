@@ -4,24 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DeckHub - Your Streaming Hub</title>
-    <link rel="icon" href="steamgrid/icon.png"/>
+    <link rel="icon" href="img/icon.png"/>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="dark:bg-zinc-800 bg-white min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="py-12">
+<body class="dark:bg-zinc-800 bg-gradient-to-b from-purple-900 to-black min-h-screen">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="py-12">
         <div class="flex justify-between items-center">
-          <h1 class="text-2xl font-semibold text-zinc-900 dark:text-white">DeckHub</h1>
-          <a href="https://github.com/frietvorkje69/" class="px-4 py-2 bg-gradient-to-r from-zinc-800 to-zinc-700 text-white rounded hover:from-zinc-700 hover:to-zinc-600 transition-colors">GitHub</a>
+            <a href="/" class="flex items-center"> <img src="img/logo.png" alt="DeckHub" class="h-12">  </a>
+            <a href="https://github.com/Frietvorkje69/DeckHub" class="px-4 py-2 text-white rounded bg-gradient-to-r from-transparent to-purple-700 transition-colors hover:bg-purple-700">GitHub</a>
         </div>
-  
-        
+
         <div class="mt-4 flex justify-between items-center">
             <div>
-                <button id="sortByName" class="px-4 py-2 bg-zinc-800 text-white rounded hover:bg-zinc-700 transition-colors">Sort by Name</button>
-                <button id="sortByStatus" class="px-4 py-2 bg-zinc-800 text-white rounded hover:bg-zinc-700 transition-colors">Sort by Status</button>
+                <button id="sortByName" class="px-4 py-2 text-white rounded transition duration-300 hover:bg-gradient-to-b from-transparent to-purple-800">Sort by Name</button>
+                <button id="sortByStatus" class="px-4 py-2 text-white rounded transition duration-300 hover:bg-gradient-to-b from-transparent to-purple-800">Sort by Status</button>
+                <button id="sortByCategory" class="px-4 py-2 text-white rounded transition duration-300 hover:bg-gradient-to-b from-transparent to-purple-800">Sort by Category</button>
             </div>
+
             <div class="mt-4 flex justify-center items-right">
                 <div class="px-4 py-2 flex items-center">
                     <span class="h-4 w-4 bg-blue-500 rounded-full mr-2"></span>
@@ -36,114 +37,140 @@
         <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 auto-cols-fr" id="cardContainer"></div>
       </div>
     </div>
-  
+
     <script>
         const services = [
             {
                 "name": "Netflix",
                 "link": "https://www.netflix.com/",
-                "image": "https://wallpaperaccess.com/full/6075732.jpg",
-                "status": "legal" 
+                "image": "https://bramptonist.com/wp-content/uploads/2018/06/netflix-image.jpg",
+                "status": "legal",
+                "category": "Streaming"
             },
             {
                 "name": "Prime Video",
                 "link": "https://www.primevideo.com/",
-                "image": "https://th.bing.com/th/id/OIP.7WRaKoAz7CXJ5uHczOx2DwAAAA?rs=1&pid=ImgDetMain", 
-                "status": "legal" 
+                "image": "https://th.bing.com/th/id/OIP.7WRaKoAz7CXJ5uHczOx2DwAAAA?rs=1&pid=ImgDetMain",
+                "status": "legal",
+                "category": "Streaming"
             },
             {
                 "name": "Disney+",
                 "link": "https://www.disneyplus.com/",
-                "image": "https://i.pinimg.com/736x/f1/ea/4b/f1ea4b62940f2ca19b21f6bdfcc1eec4.jpg", 
-                "status": "legal" 
+                "image": "https://i.pinimg.com/736x/f1/ea/4b/f1ea4b62940f2ca19b21f6bdfcc1eec4.jpg",
+                "status": "legal",
+                "category": "Streaming"
             },
             {
                 "name": "Hulu",
                 "link": "https://www.hulu.com/",
-                "image": "https://wallpapercave.com/wp/wp2491671.png", 
-                "status": "legal" 
+                "image": "https://wallpapercave.com/wp/wp2491671.png",
+                "status": "legal",
+                "category": "Streaming"
             },
             {
                 "name": "HBO Max",
                 "link": "https://www.hbomax.com/",
-                "image": "https://www.iphon.fr/app/uploads/2019/11/hbo-max-logo.png", 
-                "status": "legal" 
+                "image": "https://www.iphon.fr/app/uploads/2019/11/hbo-max-logo.png",
+                "status": "legal",
+                "category": "Streaming"
+            },
+            {
+                "name": "Paramount+",
+                "link": "https://www.paramountplus.com/",
+                "image": "https://www.hollywoodreporter.com/wp-content/uploads/2011/06/paramount_logo_2011_a_l.jpg?w=2000&h=1126&crop=1",
+                "status": "legal",
+                "category": "Streaming"
             },
             {
                 "name": "Crunchyroll",
                 "link": "https://www.crunchyroll.com/",
-                "image": "https://wallpapercave.com/wp/wp2220047.jpg", 
-                "status": "legal" 
+                "image": "https://assets.aboutamazon.com/dims4/default/dc6e6ef/2147483647/strip/false/crop/1920x1080+0+0/resize/1200x675!/quality/90/?url=https%3A%2F%2Famazon-blogs-brightspot.s3.amazonaws.com%2Ff8%2F2a%2Fe21459814491b9aac0134bfffaf8%2Fcr-1920x1080.jpg",
+                "status": "legal",
+                "category": "Anime"
             },
             {
                 "name": "AniWave",
                 "link": "https://aniwave.to/home",
-                "image": "https://p4.wallpaperbetter.com/wallpaper/730/605/86/vaporwave-synthwave-retrowave-city-outrun-hd-wallpaper-preview.jpg",
-                "status": "illegal"  
+                "image": "https://cdn2.steamgriddb.com/thumb/1db6c162d8331ec63d1ca1975bff2c1d.jpg",
+                "status": "illegal",
+                "category": "Anime"
             },
             {
                 "name": "HiAnime",
                 "link": "https://hianime.to/home",
-                "image": "https://wallpaperaccess.com/full/44729.jpg",
-                "status": "illegal"  
+                "image": "https://www.slashfilm.com/img/gallery/the-entire-attack-on-titan-timeline-explained/intro-1656893069.jpg",
+                "status": "illegal",
+                "category": "Anime"
             },
             {
                 "name": "Animeflix",
                 "link": "https://animeflix.live",
                 "image": "https://sp.rmbl.ws/s8/1/j/S/6/2/jS62b.qR4e-small-ANIMEFLIX-GREAT-FREE-ANIME-.jpg",
-                "status": "illegal"  
+                "status": "illegal",
+                "category": "Anime"
             },
             {
                 "name": "Animension",
                 "link": "https://www.animension.to/",
-                "image": "https://th.bing.com/th/id/OIP.vGwg7CHTZ-WFWiteT_blOAHaEK?rs=1&pid=ImgDetMain",
-                "status": "illegal"  
+                "image": "https://m.media-amazon.com/images/M/MV5BYWE1OTM1ZDktNWNiOS00YzM0LTkxNzQtYjE3YTYzY2NjYzIyXkEyXkFqcGdeQXVyNzI3NjY3NjQ@._V1_.jpg",
+                "status": "illegal",
+                "category": "Anime"
             },
             {
                 "name": "Youtube",
                 "link": "https://www.youtube.com/",
-                "image": "https://wallpapercave.com/wp/wp7475083.png",
-                "status": "legal"  
+                "image": "https://cdn2.steamgriddb.com/hero_thumb/4a9f57c5dadf5bc6555a2e754ca3cfa7.jpg",
+                "status": "legal",
+                "category": "Influencer"
             },
             {
                 "name": "Twitch",
                 "link": "https://www.twitch.tv/",
-                "image": "https://wallpapercave.com/wp/wp7439744.jpg",
-                "status": "legal"  
+                "image": "https://wallpaper.dog/large/20477304.png",
+                "status": "legal",
+                "category": "Influencer"
             },
             {
                 "name": "MoviesJoy",
                 "link": "https://moviesjoy.is/home",
-                "image": "https://i.imgur.com/rdJr9xs.png",
-                "status": "illegal"  
+                "image": "https://play-lh.googleusercontent.com/FwNsrfV0FUCkDw2BKUDyewEE1zPbzq0VCf1xJmxAMnYCDMKxlgknjDfl_0OHOOVum4o",
+                "status": "illegal",
+                "category": "Movies"
             },
             {
                 "name": "Movies7",
                 "link": "https://movies7.to/home",
-                "image": "https://i.imgur.com/PyzruKc.png",
-                "status": "illegal"  
+                "image": "https://editorialge.com/wp-content/uploads/2023/05/Movies7.jpeg",
+                "status": "illegal",
+                "category": "Movies"
             }
-        ]
+        ];
+
         const cardContainer = document.getElementById('cardContainer');
 
-        
+
 
         const sortByNameButton = document.getElementById('sortByName');
         const sortByStatusButton = document.getElementById('sortByStatus');
+        const sortByCategoryButton = document.getElementById('sortByCategory');
+
 
         function sortServices(sortField) {
             const sortedServices = services.sort((a, b) => {
-            if (sortField === 'name') {
-                return a.name.localeCompare(b.name); 
-            } else if (sortField === 'status') {
-                if (a.status === 'legal' && b.status !== 'legal') {
-                return -1;
-                } else if (a.status !== 'legal' && b.status === 'legal') {
-                return 1;
-                } else {
-                return a.status.localeCompare(b.status);
+                if (sortField === 'name') {
+                    return a.name.localeCompare(b.name);
+                } else if (sortField === 'status') {
+                    if (a.status === 'legal' && b.status !== 'legal') {
+                        return -1;
+                    } else if (a.status !== 'legal' && b.status === 'legal') {
+                        return 1;
+                    } else {
+                        return a.status.localeCompare(b.status);
+                    }
+                } else if (sortField === 'category') {
+                    return a.category.localeCompare(b.category);
                 }
-            }
             });
             renderCards(sortedServices);
         }
@@ -154,7 +181,7 @@
             servicesToDisplay.forEach(service => {
                 const card = document.createElement('a');
                 card.href = service.link;
-                card.classList.add('shadow', 'border-4', `border-${service.status === 'legal' ? 'blue-500' : 'red-500'}`, 'rounded-lg', 'p-4', 'flex', 'items-center', 'justify-center', 'space-y-4', 'h-48', 'w-full');
+                card.classList.add('shadow', 'border-4', `border-${service.status === 'legal' ? 'blue-500' : 'red-500'}`, 'rounded-lg', 'p-4', 'flex', 'items-center', 'justify-center', 'space-y-4', 'h-48', 'w-full', 'hover:animate-pulse', 'hover:scale-105', 'hover:border-white', 'transition-all', 'duration-300');
                 card.style.backgroundImage = `url('${service.image}')`;
                 card.style.backgroundSize = 'cover';
                 card.style.backgroundPosition = 'center';
@@ -164,7 +191,7 @@
                 const stitle = document.createElement('p');
                 stitle.textContent = service.name;
                 stitle.classList.add('text-lg', 'font-medium', 'text-white');
-                badge.appendChild(stitle);     
+                badge.appendChild(stitle);
 
                 card.appendChild(badge);
                 cardContainer.appendChild(card);
@@ -172,9 +199,10 @@
         }
 
         sortByNameButton.addEventListener('click', () => sortServices('name'));
-        sortByStatusButton.addEventListener('click', () => sortServices('status')); 
-        
+        sortByStatusButton.addEventListener('click', () => sortServices('status'));
+        sortByCategoryButton.addEventListener('click', () => sortServices('category'));
+
         sortServices('status');
     </script>
-  </body>
+</body>
 </html>
