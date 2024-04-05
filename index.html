@@ -1,134 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <title>DeckHub - Hub to Streaming</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeckHub - Your Streaming Hub</title>
     <link rel="icon" href="steamgrid/icon.png"/>
-    <script src="https://kit.fontawesome.com/c7b1d33b1c.js" crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cabin&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Days+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@300&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<header></header>
-
-<!--<nav class="sticky">-->
-<!--    <div><a href=#streaming>Streaming</a></div>-->
-<!--    <div><a href="#anime">Anime</a></div>-->
-<!--    <div><a href="#misc">Misc.</a></div>-->
-<!--</nav>-->
-
-<div class="gallery">
-    <section id="streaming" class="borderedSection">
-        <h2><i class="fa fa-video-camera" aria-hidden="true"></i> Streaming</h2>
-        <hr>
-        <div class="buttons">
-            <button class="" onclick="window.location.href='https://www.netflix.com/';">
-                Netflix
-            </button>
-            <button class="" onclick="window.location.href='https://www.primevideo.com/';">
-                Prime
-            </button>
-            <button class="" onclick="window.location.href='https://www.disneyplus.com/';">
-                Disney+
-            </button>
+<body class="dark:bg-zinc-800 bg-white min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="py-12">
+        <div class="flex justify-between items-center">
+          <h1 class="text-2xl font-semibold text-zinc-900 dark:text-white">DeckHub</h1>
+          <a href="https://github.com/frietvorkje69/" class="px-4 py-2 bg-gradient-to-r from-zinc-800 to-zinc-700 text-white rounded hover:from-zinc-700 hover:to-zinc-600 transition-colors">GitHub</a>
         </div>
-        <div class="buttons">
-            <button class="" onclick="window.location.href='https://www.hulu.com/';">
-                Hulu
-            </button>
-            <button class="" onclick="window.location.href='https://www.hbomax.com/';">
-                HBO Max
-            </button>
+  
+        
+        <div class="mt-4 flex justify-between items-center">
+            <div>
+                <button id="sortByName" class="px-4 py-2 bg-zinc-800 text-white rounded hover:bg-zinc-700 transition-colors">Sort by Name</button>
+                <button id="sortByStatus" class="px-4 py-2 bg-zinc-800 text-white rounded hover:bg-zinc-700 transition-colors">Sort by Status</button>
+            </div>
+            <div class="mt-4 flex justify-center items-right">
+                <div class="px-4 py-2 flex items-center">
+                    <span class="h-4 w-4 bg-blue-500 rounded-full mr-2"></span>
+                    <span class="text-zinc-900 dark:text-white">Legal</span>
+                </div>
+                <div class="px-4 py-2 flex items-center">
+                    <span class="h-4 w-4 bg-red-500 rounded-full mr-2"></span>
+                    <span class="text-zinc-900 dark:text-white">Illegal</span>
+                </div>
+            </div>
         </div>
-    </section>
-
-    <section id="anime" class="borderedSection">
-
-        <h2><i class="fa fa-video-camera" aria-hidden="true"></i> Anime</h2>
-        <hr>
-        <div class="buttons">
-            <button class="" onclick="window.location.href='https://www.crunchyroll.com/';">
-                Crunchyroll
-            </button>
-        </div>
-
-        <br>
-
-        <h2><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-            Illegal
-        </h2>
-        <hr>
-
-        <div class="buttons">
-            <button class="" onclick="window.location.href='https://aniwave.to/home';">
-                AniWave
-            </button>
-            <button class="" onclick="window.location.href='https://hianime.to/home';">
-                HiAnime
-            </button>
-        </div>
-        <div class="buttons">
-         <button class="" onclick="window.location.href='https://animeflix.live';">
-                Animeflix
-            </button>
-            <button class="" onclick="window.location.href='https://www.animension.to/';">
-                Animension
-            </button>
-        </div>
-    </section>
-
-    <section id="misc" class="borderedSection">
-        <h2><i class="fa fa-link" aria-hidden="true"></i> Miscellaneous</h2>
-        <hr>
-
-        <div class="buttons">
-            <button class="" onclick="window.location.href='https://www.youtube.com/';"><i class="fa fa-youtube-play"
-                                                                                           aria-hidden="true"></i>
-
-                YouTube
-            </button>
-            <button class="" onclick="window.location.href='https://www.twitch.tv/';"><i class="fa fa-twitch"
-                                                                                         aria-hidden="true"></i>
-
-                Twitch
-            </button>
-        </div>
-
-        <br>
-
-        <h2><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-            Illegal
-        </h2>
-        <hr>
-
-        <div class="buttons">
-            <button class="" onclick="window.location.href='https://moviesjoy.is/home';"><i class="fa fa-film"
-                                                                                                aria-hidden="true"></i>
-                MoviesJoy
-            </button>
-            <button class="" onclick="window.location.href='https://movies7.to/home';"><i class="fa fa-film" aria-hidden="true"></i>
-
-
-                Movies7
-            </button>
-        </div>
-
-
-    </section>
-
-</div>
-
-<footer>
-    <div>Made by: Frietvorkje69</div>
-    <div>
-        <a href="https://github.com/frietvorkje69/"><i class="fa fa-github" aria-hidden="true"></i></a>
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 auto-cols-fr" id="cardContainer"></div>
+      </div>
     </div>
-    <div>2023</div>
-</footer>
+  
+    <script>
+        const services = [
+            {
+                "name": "Netflix",
+                "link": "https://www.netflix.com/",
+                "image": "https://wallpaperaccess.com/full/6075732.jpg",
+                "status": "legal" 
+            },
+            {
+                "name": "Prime Video",
+                "link": "https://www.primevideo.com/",
+                "image": "https://th.bing.com/th/id/OIP.7WRaKoAz7CXJ5uHczOx2DwAAAA?rs=1&pid=ImgDetMain", 
+                "status": "legal" 
+            },
+            {
+                "name": "Disney+",
+                "link": "https://www.disneyplus.com/",
+                "image": "https://i.pinimg.com/736x/f1/ea/4b/f1ea4b62940f2ca19b21f6bdfcc1eec4.jpg", 
+                "status": "legal" 
+            },
+            {
+                "name": "Hulu",
+                "link": "https://www.hulu.com/",
+                "image": "https://wallpapercave.com/wp/wp2491671.png", 
+                "status": "legal" 
+            },
+            {
+                "name": "HBO Max",
+                "link": "https://www.hbomax.com/",
+                "image": "https://www.iphon.fr/app/uploads/2019/11/hbo-max-logo.png", 
+                "status": "legal" 
+            },
+            {
+                "name": "Crunchyroll",
+                "link": "https://www.crunchyroll.com/",
+                "image": "https://wallpapercave.com/wp/wp2220047.jpg", 
+                "status": "legal" 
+            },
+            {
+                "name": "AniWave",
+                "link": "https://aniwave.to/home",
+                "image": "https://p4.wallpaperbetter.com/wallpaper/730/605/86/vaporwave-synthwave-retrowave-city-outrun-hd-wallpaper-preview.jpg",
+                "status": "illegal"  
+            },
+            {
+                "name": "HiAnime",
+                "link": "https://hianime.to/home",
+                "image": "https://wallpaperaccess.com/full/44729.jpg",
+                "status": "illegal"  
+            },
+            {
+                "name": "Animeflix",
+                "link": "https://animeflix.live",
+                "image": "https://sp.rmbl.ws/s8/1/j/S/6/2/jS62b.qR4e-small-ANIMEFLIX-GREAT-FREE-ANIME-.jpg",
+                "status": "illegal"  
+            },
+            {
+                "name": "Animension",
+                "link": "https://www.animension.to/",
+                "image": "https://th.bing.com/th/id/OIP.vGwg7CHTZ-WFWiteT_blOAHaEK?rs=1&pid=ImgDetMain",
+                "status": "illegal"  
+            },
+            {
+                "name": "Youtube",
+                "link": "https://www.youtube.com/",
+                "image": "https://wallpapercave.com/wp/wp7475083.png",
+                "status": "legal"  
+            },
+            {
+                "name": "Twitch",
+                "link": "https://www.twitch.tv/",
+                "image": "https://wallpapercave.com/wp/wp7439744.jpg",
+                "status": "legal"  
+            },
+            {
+                "name": "MoviesJoy",
+                "link": "https://moviesjoy.is/home",
+                "image": "https://i.imgur.com/rdJr9xs.png",
+                "status": "illegal"  
+            },
+            {
+                "name": "Movies7",
+                "link": "https://movies7.to/home",
+                "image": "https://i.imgur.com/PyzruKc.png",
+                "status": "illegal"  
+            }
+        ]
+        const cardContainer = document.getElementById('cardContainer');
 
-</body>
+        
+
+        const sortByNameButton = document.getElementById('sortByName');
+        const sortByStatusButton = document.getElementById('sortByStatus');
+
+        function sortServices(sortField) {
+            const sortedServices = services.sort((a, b) => {
+            if (sortField === 'name') {
+                return a.name.localeCompare(b.name); 
+            } else if (sortField === 'status') {
+                if (a.status === 'legal' && b.status !== 'legal') {
+                return -1;
+                } else if (a.status !== 'legal' && b.status === 'legal') {
+                return 1;
+                } else {
+                return a.status.localeCompare(b.status);
+                }
+            }
+            });
+            renderCards(sortedServices);
+        }
+
+        function renderCards(servicesToDisplay) {
+            cardContainer.innerHTML = '';
+
+            servicesToDisplay.forEach(service => {
+                const card = document.createElement('a');
+                card.href = service.link;
+                card.classList.add('shadow', 'border-4', `border-${service.status === 'legal' ? 'blue-500' : 'red-500'}`, 'rounded-lg', 'p-4', 'flex', 'items-center', 'justify-center', 'space-y-4', 'h-48', 'w-full');
+                card.style.backgroundImage = `url('${service.image}')`;
+                card.style.backgroundSize = 'cover';
+                card.style.backgroundPosition = 'center';
+
+                const badge = document.createElement('div');
+                badge.classList.add(`bg-${service.status === 'legal' ? 'blue-500' : 'red-500'}`, 'rounded-full', 'px-4', 'py-2');
+                const stitle = document.createElement('p');
+                stitle.textContent = service.name;
+                stitle.classList.add('text-lg', 'font-medium', 'text-white');
+                badge.appendChild(stitle);     
+
+                card.appendChild(badge);
+                cardContainer.appendChild(card);
+            });
+        }
+
+        sortByNameButton.addEventListener('click', () => sortServices('name'));
+        sortByStatusButton.addEventListener('click', () => sortServices('status')); 
+        
+        sortServices('status');
+    </script>
+  </body>
 </html>
