@@ -11,6 +11,19 @@
         body {
             font-family: 'Nunito', sans-serif;
         }
+
+        /* Category container styles */
+        .category-container {
+            display: flex; /* Arrange categories horizontally */
+            flex-wrap: wrap; /* Allow wrapping if needed */
+            gap: 20px; /* Spacing between categories */
+        }
+
+        /* Individual category styles */
+        .category {
+            flex: 0 0 calc(25% - 15px); /* Distribute space equally, adjust as needed */
+            box-sizing: border-box; /* Include padding and border in width calculation */
+        }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -44,13 +57,13 @@
 </div>
 
 <div id="overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 hidden flex items-center justify-center">
-    <div class="bg-gray-800 rounded-lg overflow-hidden w-96 shadow-xl">
+    <div class="bg-gray-800 rounded-lg overflow-hidden w-96 shadow-xl" style="width: fit-content;">
         <div class="flex justify-between items-center px-4 py-2 bg-purple-800 text-white">
             <h2 class="text-lg font-semibold">Hide/Unhide Services</h2>
             <button id="closeOverlay" class="text-white">&times;</button>
         </div>
         <div class="p-4">
-            <div id="filterOptions" class="flex flex-col space-y-2 md:space-y-4 lg:space-y-6"></div> <!-- Adjust spacing based on screen size -->
+            <div id="filterOptions" class="flex flex-row space-x-2"></div>
         </div>
     </div>
 </div>
@@ -238,27 +251,47 @@
 
         function renderFilterOptions() {
             filterOptions.innerHTML = '';
+            const categoriesMap = new Map();
             services.forEach(service => {
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.value = service.name;
-                checkbox.checked = !isServiceHidden(service.name);
-                checkbox.classList.add('filter-checkbox', 'text-indigo-600', 'h-8', 'w-8', 'sm:h-6', 'sm:w-6');
-                checkbox.addEventListener('change', () => {
-                    updateFilterPreferences();
-                    applyFilterPreferences();
+                if (!categoriesMap.has(service.category)) {
+                    categoriesMap.set(service.category, []);
+                }
+                categoriesMap.get(service.category).push(service);
+            });
+
+            // Create category containers and populate them with checkboxes
+            categoriesMap.forEach((categoryServices, categoryName) => {
+                const categoryContainer = document.createElement('div');
+                categoryContainer.classList.add('category');
+
+                const categoryTitle = document.createElement('h3');
+                categoryTitle.textContent = categoryName;
+                categoryTitle.classList.add('text-lg', 'font-semibold', 'text-white', 'mb-2');
+                categoryContainer.appendChild(categoryTitle);
+
+                categoryServices.forEach(service => {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = service.name;
+                    checkbox.checked = !isServiceHidden(service.name);
+                    checkbox.classList.add('filter-checkbox', 'text-indigo-600', 'h-8', 'w-8', 'sm:h-6', 'sm:w-6');
+                    checkbox.addEventListener('change', () => {
+                        updateFilterPreferences();
+                        applyFilterPreferences();
+                    });
+
+                    const label = document.createElement('label');
+                    label.textContent = service.name;
+                    label.classList.add('text-white', 'text-base');
+
+                    const div = document.createElement('div');
+                    div.classList.add('flex', 'items-center', 'flex', 'flex-row', 'space-x-2', 'space-y-2');
+                    div.appendChild(checkbox);
+                    div.appendChild(label);
+                    categoryContainer.appendChild(div); // Append checkbox to category container
                 });
 
-                const label = document.createElement('label');
-                label.textContent = service.name;
-                label.classList.add('text-white', 'text-base');
-
-                const div = document.createElement('div');
-                div.classList.add('flex', 'items-center');
-                div.appendChild(checkbox);
-                div.appendChild(label);
-
-                filterOptions.appendChild(div);
+                filterOptions.appendChild(categoryContainer); // Append category container to filterOptions
             });
         }
 
