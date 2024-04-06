@@ -11,15 +11,17 @@
             font-family: 'Nunito', sans-serif;
         }
 
-        /* Category container styles */
         .category-container {
-            display: flex; /* Arrange categories horizontally */
-            flex-wrap: wrap; /* Allow wrapping if needed */
-            gap: 20px; /* Spacing between categories */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
             max-width: 100vw;
         }
 
-        
+        .sort-active {
+            background-color: purple !important;
+            color: white !important;
+        }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -179,6 +181,8 @@
         const sortByStatusButton = document.getElementById('sortByStatus');
         const sortByCategoryButton = document.getElementById('sortByCategory');
 
+        let activeSortField = 'status'; // Initial sort is by status, maybe save this in local storage?
+        sortServices(activeSortField);
 
         function sortServices(sortField) {
             const sortedServices = services.sort((a, b) => {
@@ -196,6 +200,20 @@
                     return a.category.localeCompare(b.category);
                 }
             });
+
+            sortByNameButton.classList.remove('sort-active');
+            sortByStatusButton.classList.remove('sort-active');
+            sortByCategoryButton.classList.remove('sort-active');
+
+            if (sortField === 'name') {
+                sortByNameButton.classList.add('sort-active');
+            } else if (sortField === 'status') {
+                sortByStatusButton.classList.add('sort-active');
+            } else if (sortField === 'category') {
+                sortByCategoryButton.classList.add('sort-active');
+            }
+
+            activeSortField = sortField;
             renderCards(sortedServices);
             applyFilterPreferences();
         }
@@ -226,7 +244,6 @@
         sortByNameButton.addEventListener('click', () => sortServices('name'));
         sortByStatusButton.addEventListener('click', () => sortServices('status'));
         sortByCategoryButton.addEventListener('click', () => sortServices('category'));
-        sortServices('status');
 
         const filterOptions = document.getElementById('filterOptions');
         const overlay = document.getElementById('overlay');
@@ -255,7 +272,6 @@
                 categoriesMap.get(service.category).push(service);
             });
 
-            // Create category containers and populate them with checkboxes
             categoriesMap.forEach((categoryServices, categoryName) => {
                 const categoryContainer = document.createElement('div');
                 categoryContainer.classList.add('category');
@@ -284,10 +300,10 @@
                     div.classList.add('flex', 'items-center', 'flex', 'flex-row', 'space-x-2', 'space-y-2');
                     div.appendChild(checkbox);
                     div.appendChild(label);
-                    categoryContainer.appendChild(div); // Append checkbox to category container
+                    categoryContainer.appendChild(div);
                 });
 
-                filterOptions.appendChild(categoryContainer); // Append category container to filterOptions
+                filterOptions.appendChild(categoryContainer);
             });
         }
 
