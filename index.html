@@ -5,11 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DeckHub - Your Streaming Hub</title>
     <link rel="icon" href="img/icon.png"/>
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
         body {
             font-family: 'Nunito', sans-serif;
+        }
+
+        .category-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 100vw;
+        }
+
+        .sort-active {
+            background-color: purple !important;
+            color: white !important;
         }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -44,13 +55,13 @@
 </div>
 
 <div id="overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 hidden flex items-center justify-center">
-    <div class="bg-gray-800 rounded-lg overflow-hidden w-96 shadow-xl">
+    <div class="bg-gray-800 rounded-lg overflow-hidden w-96 shadow-xl" style="width: fit-content;">
         <div class="flex justify-between items-center px-4 py-2 bg-purple-800 text-white">
             <h2 class="text-lg font-semibold">Hide/Unhide Services</h2>
             <button id="closeOverlay" class="text-white">&times;</button>
         </div>
         <div class="p-4">
-            <div id="filterOptions" class="flex flex-col space-y-2 md:space-y-4 lg:space-y-6"></div> <!-- Adjust spacing based on screen size -->
+            <div id="filterOptions" class="flex flex-row space-x-2"></div>
         </div>
     </div>
 </div>
@@ -170,6 +181,8 @@
         const sortByStatusButton = document.getElementById('sortByStatus');
         const sortByCategoryButton = document.getElementById('sortByCategory');
 
+        let activeSortField = 'status'; // Initial sort is by status, maybe save this in local storage?
+        sortServices(activeSortField);
 
         function sortServices(sortField) {
             const sortedServices = services.sort((a, b) => {
@@ -187,6 +200,20 @@
                     return a.category.localeCompare(b.category);
                 }
             });
+
+            sortByNameButton.classList.remove('sort-active');
+            sortByStatusButton.classList.remove('sort-active');
+            sortByCategoryButton.classList.remove('sort-active');
+
+            if (sortField === 'name') {
+                sortByNameButton.classList.add('sort-active');
+            } else if (sortField === 'status') {
+                sortByStatusButton.classList.add('sort-active');
+            } else if (sortField === 'category') {
+                sortByCategoryButton.classList.add('sort-active');
+            }
+
+            activeSortField = sortField;
             renderCards(sortedServices);
             applyFilterPreferences();
         }
@@ -217,7 +244,6 @@
         sortByNameButton.addEventListener('click', () => sortServices('name'));
         sortByStatusButton.addEventListener('click', () => sortServices('status'));
         sortByCategoryButton.addEventListener('click', () => sortServices('category'));
-        sortServices('status');
 
         const filterOptions = document.getElementById('filterOptions');
         const overlay = document.getElementById('overlay');
@@ -238,27 +264,46 @@
 
         function renderFilterOptions() {
             filterOptions.innerHTML = '';
+            const categoriesMap = new Map();
             services.forEach(service => {
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.value = service.name;
-                checkbox.checked = !isServiceHidden(service.name);
-                checkbox.classList.add('filter-checkbox', 'text-indigo-600', 'h-8', 'w-8', 'sm:h-6', 'sm:w-6');
-                checkbox.addEventListener('change', () => {
-                    updateFilterPreferences();
-                    applyFilterPreferences();
+                if (!categoriesMap.has(service.category)) {
+                    categoriesMap.set(service.category, []);
+                }
+                categoriesMap.get(service.category).push(service);
+            });
+
+            categoriesMap.forEach((categoryServices, categoryName) => {
+                const categoryContainer = document.createElement('div');
+                categoryContainer.classList.add('category');
+
+                const categoryTitle = document.createElement('h3');
+                categoryTitle.textContent = categoryName;
+                categoryTitle.classList.add('text-lg', 'font-semibold', 'text-white', 'mb-2');
+                categoryContainer.appendChild(categoryTitle);
+
+                categoryServices.forEach(service => {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = service.name;
+                    checkbox.checked = !isServiceHidden(service.name);
+                    checkbox.classList.add('filter-checkbox', 'text-indigo-600', 'h-8', 'w-8', 'sm:h-6', 'sm:w-6');
+                    checkbox.addEventListener('change', () => {
+                        updateFilterPreferences();
+                        applyFilterPreferences();
+                    });
+
+                    const label = document.createElement('label');
+                    label.textContent = service.name;
+                    label.classList.add('text-white', 'text-base');
+
+                    const div = document.createElement('div');
+                    div.classList.add('flex', 'items-center', 'flex', 'flex-row', 'space-x-2', 'space-y-2');
+                    div.appendChild(checkbox);
+                    div.appendChild(label);
+                    categoryContainer.appendChild(div);
                 });
 
-                const label = document.createElement('label');
-                label.textContent = service.name;
-                label.classList.add('text-white', 'text-base');
-
-                const div = document.createElement('div');
-                div.classList.add('flex', 'items-center');
-                div.appendChild(checkbox);
-                div.appendChild(label);
-
-                filterOptions.appendChild(div);
+                filterOptions.appendChild(categoryContainer);
             });
         }
 
