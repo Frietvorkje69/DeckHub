@@ -9,6 +9,12 @@ const sortByCategoryButton = document.getElementById('sortByCategory');
 let activeSortField = localStorage.getItem('activeSortField') || 'status';
 sortServices(activeSortField);
 
+function loadCustomServices() {
+    return JSON.parse(localStorage.getItem('customServices')) || [];
+}
+
+let allServices = [...services, ...loadCustomServices()];
+
 function sortServices(sortField) {
     const sortedServices = services.sort((a, b) => {
         if (sortField === 'name') {
@@ -48,22 +54,24 @@ function renderCards(servicesToDisplay) {
     cardContainer.innerHTML = '';
 
     servicesToDisplay.forEach(service => {
-        const card = document.createElement('a');
-        card.href = service.link;
-        card.classList.add('shadow', 'border-4', `border-${service.status === 'legal' ? 'blue-500' : 'red-500'}`, 'rounded-lg', 'p-4', 'flex', 'items-center', 'justify-center', 'space-y-4', 'h-48', 'w-full', 'hover:animate-pulse', 'hover:scale-105', 'hover:border-white', 'transition-all', 'duration-300');
-        card.style.backgroundImage = `url('${service.image}')`;
-        card.style.backgroundSize = 'cover';
-        card.style.backgroundPosition = 'center';
+        if (!isServiceHidden(service.name)) {
+            const card = document.createElement('a');
+            card.href = service.link;
+            card.classList.add('shadow', 'border-4', `border-${service.status === 'legal' ? 'blue-500' : 'red-500'}`, 'rounded-lg', 'p-4', 'flex', 'items-center', 'justify-center', 'space-y-4', 'h-48', 'w-full', 'hover:animate-pulse', 'hover:scale-105', 'hover:border-white', 'transition-all', 'duration-300');
+            card.style.backgroundImage = `url('${service.image}')`;
+            card.style.backgroundSize = 'cover';
+            card.style.backgroundPosition = 'center';
 
-        const badge = document.createElement('div');
-        badge.classList.add(`bg-${service.status === 'legal' ? 'blue-500' : 'red-500'}`, 'rounded-full', 'px-4', 'py-2');
-        const stitle = document.createElement('p');
-        stitle.textContent = service.name;
-        stitle.classList.add('text-lg', 'font-bold', 'text-white');
-        badge.appendChild(stitle);
+            const badge = document.createElement('div');
+            badge.classList.add(`bg-${service.status === 'legal' ? 'blue-500' : 'red-500'}`, 'rounded-full', 'px-4', 'py-2');
+            const stitle = document.createElement('p');
+            stitle.textContent = service.name;
+            stitle.classList.add('text-lg', 'font-bold', 'text-white');
+            badge.appendChild(stitle);
 
-        card.appendChild(badge);
-        cardContainer.appendChild(card);
+            card.appendChild(badge);
+            cardContainer.appendChild(card);
+        }
     });
 }
 
@@ -78,6 +86,61 @@ const closeOverlayButton = document.getElementById('closeOverlay');
 function toggleOverlay() {
     overlay.classList.toggle('hidden');
 }
+
+//NEW ADD SERVICE LOGIC
+const addServiceButton = document.getElementById('addServiceButton');
+const addServiceOverlay = document.getElementById('addServiceOverlay');
+const closeAddServiceOverlayButton = document.getElementById('closeAddServiceOverlay');
+
+function toggleAddServiceOverlay() {
+    addServiceOverlay.classList.toggle('hidden');
+}
+
+addServiceButton.addEventListener('click', () => {
+    toggleAddServiceOverlay();
+});
+
+closeAddServiceOverlayButton.addEventListener('click', () => {
+    toggleAddServiceOverlay();
+});
+
+addServiceOverlay.addEventListener('click', (event) => {
+    if (event.target === addServiceOverlay) {
+        toggleAddServiceOverlay();
+    }
+});
+
+const addServiceForm = document.getElementById('addServiceForm');
+
+addServiceForm.addEventListener('submit', (event) => {
+    console.log('Creating new service..')
+    event.preventDefault();
+
+    const serviceName = document.getElementById('serviceName').value;
+    const serviceLink = document.getElementById('serviceLink').value;
+    const serviceImage = document.getElementById('serviceImage').value;
+    const serviceStatus = document.getElementById('serviceStatus').value;
+    const serviceCategory = document.getElementById('serviceCategory').value;
+
+    const customService = {
+        name: serviceName,
+        link: serviceLink,
+        image: serviceImage,
+        status: serviceStatus,
+        category: serviceCategory
+    };
+
+
+    const customServices = JSON.parse(localStorage.getItem('customServices')) || [];
+    customServices.push(customService);
+    localStorage.setItem('customServices', JSON.stringify(customServices));
+
+    toggleAddServiceOverlay();
+
+    const allServices = [...services, ...loadCustomServices()];
+    renderCards(allServices);
+
+});
 
 function updateFilterPreferences() {
     const checkboxes = document.querySelectorAll('.filter-checkbox');
@@ -150,12 +213,6 @@ document.getElementById('filterButton').addEventListener('click', () => {
 
 closeOverlayButton.addEventListener('click', () => {
     toggleOverlay();
-});
-
-overlay.addEventListener('click', (event) => {
-    if (event.target === overlay) {
-        toggleOverlay();
-    }
 });
 
 renderFilterOptions();

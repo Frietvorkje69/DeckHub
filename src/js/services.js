@@ -105,4 +105,4 @@ const services = [
         "category": "Movies"
     }
 ];
-export default services;  // Export the services array
+export default services;
