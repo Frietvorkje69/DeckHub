@@ -19,6 +19,18 @@ const addServiceForm = document.getElementById('addServiceForm');
 
 let activeSortField = localStorage.getItem('activeSortField') || 'status';
 
+const serviceNameInput = document.getElementById('serviceName');
+const serviceLinkInput = document.getElementById('serviceLink');
+const serviceImageInput = document.getElementById('serviceImage');
+const serviceStatusInput = document.getElementById('serviceStatus');
+const serviceCategoryInput = document.getElementById('serviceCategory');
+
+serviceNameInput.addEventListener('input', updatePreview);
+serviceLinkInput.addEventListener('input', updatePreview);
+serviceImageInput.addEventListener('input', updatePreview);
+serviceStatusInput.addEventListener('change', updatePreview);
+serviceCategoryInput.addEventListener('input', updatePreview);
+
 const settingsButton = document.getElementById('dropdownButton');
 const settingsDropdown = document.getElementById('dropdownMenu');
 settingsButton.addEventListener('click', () => {
@@ -165,15 +177,15 @@ function addNewService(event) {
         id: generateRandomId()
     };
 
-    console.log(customService.id)
-
     const customServices = loadCustomServices();
     customServices.push(customService);
     localStorage.setItem('customServices', JSON.stringify(customServices));
 
+    document.getElementById('addServiceForm').reset();
     toggleAddServiceOverlay();
     renderAllServices();
     renderFilterOptions();
+    updatePreview();
 
 }
 
@@ -181,12 +193,57 @@ function generateRandomId() {
     return '_' + Math.random().toString(36).substr(2, 9);
 }
 
+function renderCustomServices() {
+    const customServices = loadCustomServices();
+    const customServicesSection = document.getElementById('customServicesSection');
+    customServicesSection.innerHTML = '';
+
+    if (customServices.length > 0) {
+        const title = document.createElement('h3');
+        title.textContent = 'Custom Services:';
+        title.classList.add('text-lg', 'font-semibold', 'text-white', 'mb-4');
+        customServicesSection.appendChild(title);
+
+        customServices.forEach(service => {
+            const serviceNameElement = document.createElement('p');
+            serviceNameElement.textContent = service.name;
+            serviceNameElement.classList.add('text-white', 'text-base');
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.classList.add('px-2', 'py-1', 'bg-red-500', 'text-white', 'rounded', 'hover:bg-red-600', 'transition', 'duration-300');
+            deleteButton.addEventListener('click', () => deleteCustomService(service.id));
+
+            const container = document.createElement('div');
+            container.classList.add('flex', 'items-center', 'justify-between');
+            container.appendChild(serviceNameElement);
+            container.appendChild(deleteButton);
+
+            customServicesSection.appendChild(container);
+        });
+    }
+}
+
+function deleteCustomService(serviceId) {
+    const customServices = loadCustomServices();
+    const updatedServices = customServices.filter(service => service.id !== serviceId);
+    localStorage.setItem('customServices', JSON.stringify(updatedServices));
+    renderCustomServices();
+    renderFilterOptions()
+    renderAllServices()
+}
+
 function toggleOverlay() {
     overlay.classList.toggle('hidden');
     settingsDropdown.classList.add('hidden');
+
+    if (!overlay.classList.contains('hidden')) {
+        renderCustomServices();
+    }
 }
 
 function toggleAddServiceOverlay() {
+    updatePreview();
     addServiceOverlay.classList.toggle('hidden');
     settingsDropdown.classList.add('hidden');
 }
@@ -249,6 +306,47 @@ function updateFilterPreferences() {
         preferences[checkbox.getAttribute('data-id')] = checkbox.checked;
     });
     localStorage.setItem('filterPreferences', JSON.stringify(preferences));
+}
+
+function createPreviewCard(service) {
+    const card = document.createElement('div');
+    card.classList.add('shadow', 'border-4', `border-${service.status === 'legal' ? 'blue-500' : 'red-500'}`, 'rounded-lg', 'p-4', 'flex', 'items-center', 'justify-center', 'space-y-4', 'h-48', 'w-full', 'transition-all', 'duration-300');
+    card.style.backgroundImage = `url('${service.image ? service.image : 'https://github.com/Frietvorkje69/DeckHub/blob/master/src/img/capsule.png?raw=true'}')`;
+    card.style.backgroundSize = 'cover';
+    card.style.backgroundPosition = 'center';
+
+    const badge = document.createElement('div');
+    badge.classList.add(`bg-${service.status === 'legal' ? 'blue-500' : 'red-500'}`, 'rounded-full', 'px-4', 'py-2');
+    const stitle = document.createElement('p');
+
+    stitle.textContent = service.name ? service.name : 'Preview';
+
+    stitle.classList.add('text-lg', 'font-bold', 'text-white');
+    badge.appendChild(stitle);
+
+    card.appendChild(badge);
+    return card;
+}
+
+function updatePreview() {
+    const serviceName = serviceNameInput.value;
+    const serviceLink = serviceLinkInput.value.trim();
+    const serviceImage = serviceImageInput.value;
+    const serviceStatus = serviceStatusInput.value;
+    const serviceCategory = serviceCategoryInput.value;
+
+    const previewSection = document.getElementById('previewSection');
+    previewSection.innerHTML = '';
+
+    const previewCard = createPreviewCard({
+        name: serviceName,
+        link: serviceLink,
+        image: serviceImage,
+        status: serviceStatus,
+        category: serviceCategory
+    });
+
+    previewSection.appendChild(previewCard);
 }
 
 sortServices(activeSortField);

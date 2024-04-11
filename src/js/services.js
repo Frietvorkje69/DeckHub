@@ -91,7 +91,7 @@ const services = [
         "link": "https://www.youtube.com/",
         "image": "https://cdn2.steamgriddb.com/hero_thumb/4a9f57c5dadf5bc6555a2e754ca3cfa7.jpg",
         "status": "legal",
-        "category": "Influencer",
+        "category": "Social",
         "id": 11
     },
     {
@@ -99,7 +99,7 @@ const services = [
         "link": "https://www.twitch.tv/",
         "image": "https://wallpaper.dog/large/20477304.png",
         "status": "legal",
-        "category": "Influencer",
+        "category": "Social",
         "id": 12
     },
     {
