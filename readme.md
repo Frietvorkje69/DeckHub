@@ -12,4 +12,4 @@ To help you through the process of adding DeckHub to Steam, I've linked a video 
 
 ## Roadmap
 
-- <b>Feature:</b> Users are able to locally store their own custom sites.
+- ?
