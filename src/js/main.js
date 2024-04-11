@@ -84,9 +84,9 @@ function sortAndRenderCards(servicesToDisplay) {
         if (activeSortField === 'name') {
             return a.name.localeCompare(b.name);
         } else if (activeSortField === 'status') {
-            if (a.status === 'legal' && b.status !== 'legal') {
+            if (a.status === 'Official' && b.status !== 'Official') {
                 return -1;
-            } else if (a.status !== 'legal' && b.status === 'legal') {
+            } else if (a.status !== 'Official' && b.status === 'Official') {
                 return 1;
             } else {
                 return a.status.localeCompare(b.status);
@@ -123,13 +123,13 @@ function renderCards(servicesToDisplay) {
 function createServiceCard(service) {
     const card = document.createElement('a');
     card.href = service.link;
-    card.classList.add('shadow', 'border-4', `border-${service.status === 'legal' ? 'blue-500' : 'red-500'}`, 'rounded-lg', 'p-4', 'flex', 'items-center', 'justify-center', 'space-y-4', 'h-48', 'w-full', 'hover:animate-pulse', 'hover:scale-105', 'hover:border-white', 'transition-all', 'duration-300');
+    card.classList.add('shadow', 'border-4', `border-${service.status === 'Official' ? 'blue-500' : 'red-500'}`, 'rounded-lg', 'p-4', 'flex', 'items-center', 'justify-center', 'space-y-4', 'h-48', 'w-full', 'hover:animate-pulse', 'hover:scale-105', 'hover:border-white', 'transition-all', 'duration-300');
     card.style.backgroundImage = `url('${service.image}')`;
     card.style.backgroundSize = 'cover';
     card.style.backgroundPosition = 'center';
 
     const badge = document.createElement('div');
-    badge.classList.add(`bg-${service.status === 'legal' ? 'blue-500' : 'red-500'}`, 'rounded-full', 'px-4', 'py-2');
+    badge.classList.add(`bg-${service.status === 'Official' ? 'blue-500' : 'red-500'}`, 'rounded-full', 'px-4', 'py-2');
     const stitle = document.createElement('p');
     stitle.textContent = service.name;
     stitle.classList.add('text-lg', 'font-bold', 'text-white');
@@ -310,13 +310,13 @@ function updateFilterPreferences() {
 
 function createPreviewCard(service) {
     const card = document.createElement('div');
-    card.classList.add('shadow', 'border-4', `border-${service.status === 'legal' ? 'blue-500' : 'red-500'}`, 'rounded-lg', 'p-4', 'flex', 'items-center', 'justify-center', 'space-y-4', 'h-48', 'w-full', 'transition-all', 'duration-300');
+    card.classList.add('shadow', 'border-4', `border-${service.status === 'Official' ? 'blue-500' : 'red-500'}`, 'rounded-lg', 'p-4', 'flex', 'items-center', 'justify-center', 'space-y-4', 'h-48', 'w-full', 'transition-all', 'duration-300');
     card.style.backgroundImage = `url('${service.image ? service.image : 'https://github.com/Frietvorkje69/DeckHub/blob/master/src/img/capsule.png?raw=true'}')`;
     card.style.backgroundSize = 'cover';
     card.style.backgroundPosition = 'center';
 
     const badge = document.createElement('div');
-    badge.classList.add(`bg-${service.status === 'legal' ? 'blue-500' : 'red-500'}`, 'rounded-full', 'px-4', 'py-2');
+    badge.classList.add(`bg-${service.status === 'Official' ? 'blue-500' : 'red-500'}`, 'rounded-full', 'px-4', 'py-2');
     const stitle = document.createElement('p');
 
     stitle.textContent = service.name ? service.name : 'Preview';
