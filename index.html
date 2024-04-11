@@ -28,9 +28,19 @@
 <body class="dark:bg-zinc-800 bg-gradient-to-b from-purple-900 to-black min-h-screen">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="py-12">
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center space-x-4">
             <a href="#" class="flex items-center"> <img src="src/img/logo.png" alt="DeckHub" class="h-12">  </a>
-            <button id="filterButton" class="px-4 py-2 text-white rounded bg-gradient-to-r from-transparent to-purple-700 transition-colors hover:bg-purple-700">Filter</button>        </div>
+            <div class="relative">
+                <button id="dropdownButton" class="px-4 py-2 text-white rounded bg-gradient-to-r from-transparent to-purple-700 transition-colors hover:bg-purple-700">Settings</button>
+                <div id="dropdownMenu" class="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 hidden">
+                    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                        <button id="addServiceButton" class="block w-full px-4 py-2 text-left text-sm text-white hover:bg-gray-700"" role="menuitem">Add Service</button>
+                        <button id="filterButton" class="block w-full px-4 py-2 text-left text-sm text-white hover:bg-gray-700" role="menuitem">Edit Services</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="mt-4 flex justify-between items-center">
             <div>
@@ -57,14 +67,40 @@
 <div id="overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 hidden flex items-center justify-center">
     <div class="bg-gray-800 rounded-lg overflow-hidden w-96 shadow-xl" style="width: fit-content;">
         <div class="flex justify-between items-center px-4 py-2 bg-purple-800 text-white">
-            <h2 class="text-lg font-semibold">Hide/Unhide Services</h2>
+            <h2 class="text-lg font-semibold">Edit Services</h2>
             <button id="closeOverlay" class="text-white">&times;</button>
         </div>
         <div class="p-4">
             <div id="filterOptions" class="flex flex-row space-x-2"></div>
         </div>
+        <div id="customServicesSection" class="p-4">
+        </div>
     </div>
 </div>
+
+<div id="addServiceOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 hidden flex items-center justify-center">
+    <div class="bg-gray-800 rounded-lg overflow-hidden w-96 shadow-xl" style="width: fit-content;">
+        <div class="flex justify-between items-center px-4 py-2 bg-purple-800 text-white">
+            <h2 class="text-lg font-semibold">Add a New Service</h2>
+            <button id="closeAddServiceOverlay" class="text-white">&times;</button>
+        </div>
+        <div class="p-4 flex">
+            <form id="addServiceForm" class="flex flex-col space-y-2 mr-4">
+                <input type="text" id="serviceName" placeholder="Name" class="p-2 rounded border border-gray-300">
+                <input type="text" id="serviceLink" placeholder="Link" class="p-2 rounded border border-gray-300">
+                <input type="text" id="serviceImage" placeholder="Image URL" class="p-2 rounded border border-gray-300">
+                <select id="serviceStatus" class="p-2 rounded border border-gray-300">
+                    <option value="legal">Legal</option>
+                    <option value="illegal">Illegal</option>
+                </select>
+                <input type="text" id="serviceCategory" placeholder="Category" class="p-2 rounded border border-gray-300">
+                <button type="submit" class="px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800 transition-colors">Add Service</button>
+            </form>
+            <div id="previewSection" class="mt-auto mb-auto p-4 rounded-lg flex-grow" style="width: 250px;"></div>
+        </div>
+    </div>
+</div>
+
 <script type="module" src="src/js/main.js"></script>
 </body>
 </html>
