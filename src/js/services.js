@@ -10,7 +10,7 @@ const services = [
     {
         "name": "Prime Video",
         "link": "https://www.primevideo.com/",
-        "image": "https://th.bing.com/th/id/OIP.7WRaKoAz7CXJ5uHczOx2DwAAAA?rs=1&pid=ImgDetMain",
+        "image": "https://variety.com/wp-content/uploads/2023/11/homelander.jpg",
         "status": "Official",
         "category": "Streaming",
         "id": 2
